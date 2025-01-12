@@ -9,8 +9,8 @@ async function bootstrap() {
 
   // Enable CORS
   app.enableCors({
-    origin: [process.env.FRONTEND_URL || 'http://localhost:3000'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    origin: 'https://hr-system-fawn.vercel.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   });
