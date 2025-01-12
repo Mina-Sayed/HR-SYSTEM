@@ -27,15 +27,28 @@ async function bootstrap() {
   // Global exception filter
   app.useGlobalFilters(new HttpExceptionFilter());
 
-  // Swagger setup
+  // Swagger setup with production URL
   const config = new DocumentBuilder()
     .setTitle('HR System API')
     .setDescription('The HR system API documentation')
     .setVersion('1.0')
     .addBearerAuth()
+    .addServer('https://hr-system-backend-one.vercel.app') // Add production server
     .build();
+  
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  
+  // Enable Swagger UI in production
+  SwaggerModule.setup('api', app, document, {
+    customSiteTitle: 'HR System API Documentation',
+    customfavIcon: 'https://hr-system-fawn.vercel.app/logo.svg',
+    customJs: [
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.min.js',
+    ],
+    customCssUrl: [
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css',
+    ],
+  });
 
   const port = process.env.PORT || 3001;
   await app.listen(port);
